@@ -17,77 +17,41 @@ export function ReferencePage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold m-0" style={{ color: 'var(--color-text)' }}>
-            Справочник
-          </h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-            Все материалы для подготовки к экзамену A2
-          </p>
+          <h1 className="text-2xl font-bold m-0" style={{ color: 'var(--color-text)' }}>Справочник</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>Все материалы для подготовки к экзамену A2</p>
         </div>
-        <button
-          onClick={() => setShowEnglish(!showEnglish)}
-          className="btn btn-secondary text-xs"
-        >
+        <button onClick={() => setShowEnglish(!showEnglish)} className="btn btn-secondary text-xs">
           {showEnglish ? '🇬🇧 Скрыть EN' : '🇬🇧 Показать EN'}
         </button>
       </div>
 
-      {/* Section tabs */}
       <div className="flex gap-2">
         {sections.map((s) => (
-          <button
-            key={s.key}
-            onClick={() => setSection(s.key)}
-            className={`btn ${section === s.key ? 'btn-primary' : 'btn-secondary'} text-sm px-4 py-2`}
-          >
+          <button key={s.key} onClick={() => setSection(s.key)} className={`btn ${section === s.key ? 'btn-primary' : 'btn-secondary'} text-sm px-4 py-2`}>
             {s.icon} {s.label}
           </button>
         ))}
       </div>
 
-      {/* ── Russian & English Texts ── */}
+      {/* ── Texts ── */}
       {section === 'texts' && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
           {topics.map((t) => (
             <div key={t.id} className="card p-6 sm:p-8 space-y-4">
               <div className="flex items-center gap-3">
-                <span
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: 'var(--color-accent-soft)', color: 'var(--color-accent)' }}
-                >
-                  {t.id}
-                </span>
+                <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: 'var(--color-accent-soft)', color: 'var(--color-accent)' }}>{t.id}</span>
                 <div>
-                  <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>
-                    {t.titleRu}
-                  </h2>
-                  {showEnglish && (
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                      {t.titleEn}
-                    </p>
-                  )}
+                  <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>{t.titleRu}</h2>
+                  {showEnglish && <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>{t.titleEn}</p>}
                 </div>
               </div>
-
-              <p className="text-ru leading-relaxed" style={{ color: 'var(--color-text)' }}>
-                {t.textRu}
-              </p>
-
+              <p className="text-ru leading-relaxed" style={{ color: 'var(--color-text)' }}>{t.textRu}</p>
               {showEnglish && (
                 <div className="pt-3" style={{ borderTop: '1px solid var(--color-border)' }}>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: 'var(--color-accent)' }}>
-                    English
-                  </p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-                    {t.textEn}
-                  </p>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: 'var(--color-accent)' }}>English</p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{t.textEn}</p>
                 </div>
               )}
             </div>
@@ -97,97 +61,56 @@ export function ReferencePage() {
 
       {/* ── Follow-up Questions ── */}
       {section === 'questions' && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
           {followUpSets.map((set) => (
             <div key={set.topicId} className="card p-6 sm:p-8 space-y-5">
               <div>
-                <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>
-                  {set.topicId}. {set.topicTitleRu}
-                </h2>
-                <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
-                  {set.contextNote}
-                </p>
+                <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>{set.topicId}. {set.topicTitleRu}</h2>
+                <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{set.contextNote}</p>
               </div>
-
               <div className="space-y-4">
                 {set.questions.map((q, i) => {
                   const tr = questionTranslations[q.questionRu];
                   return (
-                  <div
-                    key={i}
-                    className="pl-4 space-y-1"
-                    style={{ borderLeft: '2px solid var(--color-accent)' }}
-                  >
-                    <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
-                      Вопрос: {q.questionRu}
-                    </p>
-                    <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                      Ответ: {q.answerRu}
-                    </p>
-                    {showEnglish && tr && (
-                      <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
-                        <p className="text-xs" style={{ color: 'var(--color-accent)' }}>
-                          Q: {tr.qEn}
-                        </p>
-                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                          A: {tr.aEn}
-                        </p>
-                      </div>
-                    )}
+                    <div key={i} className="pl-4 space-y-1" style={{ borderLeft: '2px solid var(--color-accent)' }}>
+                      <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>Вопрос: {q.questionRu}</p>
+                      <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Ответ: {q.answerRu}</p>
+                      {showEnglish && tr && (
+                        <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                          <p className="text-xs" style={{ color: 'var(--color-accent)' }}>Q: {tr.qEn}</p>
+                          <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>A: {tr.aEn}</p>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
             </div>
           ))}
-
-          {/* Extra standalone questions from the markdown */}
           <ExtraQuestions showEnglish={showEnglish} />
         </motion.div>
       )}
 
       {/* ── Situations ── */}
       {section === 'situations' && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
           {situationCategories.map((cat) => (
             <div key={cat.category} className="card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>
-                {cat.category}
-              </h2>
-
+              <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>{cat.category}</h2>
               <div className="space-y-4">
                 {cat.situations.map((s, i) => {
                   const tr = situationTranslations[s.scenarioRu];
                   return (
-                  <div
-                    key={i}
-                    className="pl-4 space-y-1"
-                    style={{ borderLeft: '2px solid var(--color-warning)' }}
-                  >
-                    <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
-                      {s.scenarioRu}
-                    </p>
-                    <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                      {s.answerRu}
-                    </p>
-                    {showEnglish && tr && (
-                      <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
-                        <p className="text-xs italic" style={{ color: 'var(--color-warning)' }}>
-                          {tr.scenarioEn}
-                        </p>
-                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                          {tr.answerEn}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                    <div key={i} className="pl-4 space-y-1" style={{ borderLeft: '2px solid var(--color-warning)' }}>
+                      <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>{s.scenarioRu}</p>
+                      <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{s.answerRu}</p>
+                      {showEnglish && tr && (
+                        <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                          <p className="text-xs italic" style={{ color: 'var(--color-warning)' }}>{tr.scenarioEn}</p>
+                          <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{tr.answerEn}</p>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
@@ -199,7 +122,6 @@ export function ReferencePage() {
   );
 }
 
-/* ── Extra standalone Q&A from the markdown (not tied to the 5 topic sets) ── */
 function ExtraQuestions({ showEnglish }: { showEnglish: boolean }) {
   const extraSections = [
     {
@@ -258,35 +180,21 @@ function ExtraQuestions({ showEnglish }: { showEnglish: boolean }) {
     <>
       {extraSections.map((sec) => (
         <div key={sec.title} className="card p-6 sm:p-8 space-y-5">
-          <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>
-            {sec.title}
-          </h2>
+          <h2 className="text-lg font-semibold m-0" style={{ color: 'var(--color-text)' }}>{sec.title}</h2>
           <div className="space-y-4">
             {sec.items.map((item, i) => {
               const tr = extraTranslations[item.q];
               return (
-              <div
-                key={i}
-                className="pl-4 space-y-1"
-                style={{ borderLeft: '2px solid var(--color-success)' }}
-              >
-                <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
-                  {item.q}
-                </p>
-                <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                  {item.a}
-                </p>
-                {showEnglish && tr && (
-                  <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
-                    <p className="text-xs" style={{ color: 'var(--color-success)' }}>
-                      Q: {tr.qEn}
-                    </p>
-                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                      A: {tr.aEn}
-                    </p>
-                  </div>
-                )}
-              </div>
+                <div key={i} className="pl-4 space-y-1" style={{ borderLeft: '2px solid var(--color-success)' }}>
+                  <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>{item.q}</p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{item.a}</p>
+                  {showEnglish && tr && (
+                    <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                      <p className="text-xs" style={{ color: 'var(--color-success)' }}>Q: {tr.qEn}</p>
+                      <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>A: {tr.aEn}</p>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
