@@ -7,6 +7,7 @@ import { PresentationPage } from './pages/PresentationPage';
 import { QuestionsPage } from './pages/QuestionsPage';
 import { SituationsPage } from './pages/SituationsPage';
 import { FlashcardsPage } from './pages/FlashcardsPage';
+import { ReferencePage } from './pages/ReferencePage';
 import { useAppStore } from './stores/useAppStore';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path="questions" element={<QuestionsPage />} />
           <Route path="situations" element={<SituationsPage />} />
           <Route path="flashcards" element={<FlashcardsPage />} />
+          <Route path="reference" element={<ReferencePage />} />
         </Route>
       </Routes>
     </AnimatePresence>

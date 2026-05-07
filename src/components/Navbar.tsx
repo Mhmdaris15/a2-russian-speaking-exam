@@ -7,6 +7,7 @@ const links = [
   { to: '/questions', label: 'Вопросы', icon: '❓' },
   { to: '/situations', label: 'Ситуации', icon: '🎭' },
   { to: '/flashcards', label: 'Карточки', icon: '🃏' },
+  { to: '/reference', label: 'Справочник', icon: '📖' },
 ];
 
 export function Navbar() {
