@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { topics, followUpSets, situationCategories } from '../data/examData';
+import { questionTranslations, situationTranslations, extraTranslations } from '../data/translations';
 
 type Section = 'texts' | 'questions' | 'situations';
 
@@ -113,26 +114,38 @@ export function ReferencePage() {
               </div>
 
               <div className="space-y-4">
-                {set.questions.map((q, i) => (
+                {set.questions.map((q, i) => {
+                  const tr = questionTranslations[q.questionRu];
+                  return (
                   <div
                     key={i}
-                    className="pl-4"
+                    className="pl-4 space-y-1"
                     style={{ borderLeft: '2px solid var(--color-accent)' }}
                   >
-                    <p className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
+                    <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
                       Вопрос: {q.questionRu}
                     </p>
                     <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                       Ответ: {q.answerRu}
                     </p>
-                  </div>
-                ))}
+                    {showEnglish && tr && (
+                      <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                        <p className="text-xs" style={{ color: 'var(--color-accent)' }}>
+                          Q: {tr.qEn}
+                        </p>
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                          A: {tr.aEn}
+                        </p>
+                      </div>
+                    )}
+                  );
+                })}
               </div>
             </div>
           ))}
 
           {/* Extra standalone questions from the markdown */}
-          <ExtraQuestions />
+          <ExtraQuestions showEnglish={showEnglish} />
         </motion.div>
       )}
 
@@ -150,20 +163,33 @@ export function ReferencePage() {
               </h2>
 
               <div className="space-y-4">
-                {cat.situations.map((s, i) => (
+                {cat.situations.map((s, i) => {
+                  const tr = situationTranslations[s.scenarioRu];
+                  return (
                   <div
                     key={i}
-                    className="pl-4"
+                    className="pl-4 space-y-1"
                     style={{ borderLeft: '2px solid var(--color-warning)' }}
                   >
-                    <p className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
+                    <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
                       {s.scenarioRu}
                     </p>
                     <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                       {s.answerRu}
                     </p>
+                    {showEnglish && tr && (
+                      <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                        <p className="text-xs italic" style={{ color: 'var(--color-warning)' }}>
+                          {tr.scenarioEn}
+                        </p>
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                          {tr.answerEn}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -174,7 +200,7 @@ export function ReferencePage() {
 }
 
 /* ── Extra standalone Q&A from the markdown (not tied to the 5 topic sets) ── */
-function ExtraQuestions() {
+function ExtraQuestions({ showEnglish }: { showEnglish: boolean }) {
   const extraSections = [
     {
       title: 'О себе и жизни в России',
@@ -236,20 +262,33 @@ function ExtraQuestions() {
             {sec.title}
           </h2>
           <div className="space-y-4">
-            {sec.items.map((item, i) => (
+            {sec.items.map((item, i) => {
+              const tr = extraTranslations[item.q];
+              return (
               <div
                 key={i}
-                className="pl-4"
+                className="pl-4 space-y-1"
                 style={{ borderLeft: '2px solid var(--color-success)' }}
               >
-                <p className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
+                <p className="text-sm font-semibold mb-0" style={{ color: 'var(--color-text)' }}>
                   {item.q}
                 </p>
                 <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                   {item.a}
                 </p>
+                {showEnglish && tr && (
+                  <div className="mt-1 pt-1" style={{ borderTop: '1px dashed var(--color-border)' }}>
+                    <p className="text-xs" style={{ color: 'var(--color-success)' }}>
+                      Q: {tr.qEn}
+                    </p>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                      A: {tr.aEn}
+                    </p>
+                  </div>
+                )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
